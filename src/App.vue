@@ -1,5 +1,6 @@
 <template>
-  <div class="container d-flex justify-content-center align-items-center h-100 w-100">
+  <div class="container d-flex flex-column justify-content-center align-items-center h-100 w-100">
+    <img src="./assets/logo.png" id="logo" alt="">
     <AppPokedex/>
   </div>
 </template>
@@ -23,12 +24,19 @@ export default {
 <style lang="scss">
   body{
     height: 100vh;
-    background: url('./assets/erba.jpeg');
+    background: url('./assets/bg.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 
     #app {
       height: 100%;
+      position: relative;
+      #logo{
+        width: 300px;
+        position: absolute;
+        z-index: 1;
+        top: 0;
+      }
     }
   }
 </style>

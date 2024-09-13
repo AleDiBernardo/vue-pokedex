@@ -2,6 +2,7 @@
   <div class="container rounded rounded-5 d-flex p-4">
     <AppSearchPokemon/>
     <AppList/>
+    <img src="../assets/pngegg.png" alt="">
   </div>
 </template>
 
@@ -29,6 +30,12 @@ export default {
     height: 800px;
     background: red;
     border: 10px solid rgb(156, 0, 0);
+    position: relative;
     
+    img {
+        position: absolute;
+        bottom: -50px;
+        right: -50px;
+    }
 }
 </style>

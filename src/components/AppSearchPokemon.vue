@@ -6,23 +6,23 @@
       <input
         type="search"
         name="searchbar"
-        placeholder="Search a Pokémon"
+        :placeholder="message"
         autocomplete="off"
         id="query"
         class="p-1 rounded rounded-3"
         v-model="this.store.userQuery"
         @keyup.enter="search"
       />
-      <button class="btn btn-light">Catch it!</button>
+      <button class="btn btn-light" @click="this.catch">Catch it!</button>
     </header>
     <main class="d-flex flex-column gap-3 h-100">
       <div
         class="d-flex justify-content-center align-items-center mt-3 p-3 text-bg-secondary rounded rounded-3"
       >
         <div
-          class="display bg-info border border-5 border-black rounded rounded-3  "
+          class="display bg-info border border-5 border-black rounded rounded-3"
         >
-          <AppImages/>
+          <AppImages />
         </div>
       </div>
       <div class="stats w-100 h-100 rounded rounded-3 p-4">
@@ -32,26 +32,32 @@
               <span class="fw-bold"> Name:</span> {{ this.store.results.name }}
             </li>
             <li>
-              <span class="fw-bold"> Type:</span> {{ this.store.results.types[0].type.name }}
+              <span class="fw-bold"> Type:</span>
+              {{ this.store.results.types[0].type.name }}
             </li>
             <li>
-              <span class="fw-bold"> Height:</span> {{ this.store.results.height + '"' }}
+              <span class="fw-bold"> Height:</span>
+              {{ this.store.results.height + '"' }}
             </li>
             <li>
-              <span class="fw-bold"> Weight:</span> {{ this.store.results.weight + " lbs" }}
+              <span class="fw-bold"> Weight:</span>
+              {{ this.store.results.weight + " lbs" }}
             </li>
           </ul>
           <div>
-
             <span class="fw-bold">Stats</span>
             <ul class="p-0">
               <li v-for="curStat in this.store.results.stats" :key="curStat.id">
-                  {{ curStat.stat.name + ": " + curStat.base_stat }}
+                {{ curStat.stat.name + ": " + curStat.base_stat }}
               </li>
             </ul>
           </div>
         </div>
-        <span v-else class="d-flex justify-content-center align-items-center h-100 fw-bold fs-4">Search a Pokémon</span>
+        <span
+          v-else
+          class="d-flex justify-content-center align-items-center h-100 fw-bold fs-4"
+          >Search a Pokémon</span
+        >
 
         <!-- {{ this.store.results ? this.store.results.name : "No results" }} -->
       </div>
@@ -67,22 +73,53 @@ export default {
   data() {
     return {
       store,
+      err: false,
+      message: " Search a Pokémon"
     };
   },
   methods: {
     search() {
-     
+      
       axios
-        .get(`https://pokeapi.co/api/v2/pokemon/${this.store.userQuery}/`)
+        .get(
+          `https://pokeapi.co/api/v2/pokemon/${this.store.userQuery.trim().toLowerCase()}/`
+        )
         .then((resp) => {
           this.store.results = resp.data;
           console.log(this.store.results);
+          this.err = false;
+          this.message = " Search a Pokémon";
+          this.store.userQuery = ""
+
+        })
+        .catch((error) => {
+          
+          this.store.results = null;
+          this.store.userQuery = null;
+          this.err = true;
+          this.message = " Il Pokémon non esiste";
         });
+    },
+    catch() {
+      if (this.store.results) {
+        const caughtPokemon = JSON.parse(JSON.stringify(this.store.results));
+
+        const isAlreadyCatched = this.store.catchedPokemon.some(
+          (pokemon) => pokemon.name === caughtPokemon.name
+        );
+
+        if (!isAlreadyCatched) {
+          this.store.catchedPokemon.push(caughtPokemon);
+          console.log("Catched:", this.store.catchedPokemon);
+        } else {
+          console.log("This Pokémon is already caught!");
+        }
+      }
     },
   },
   components: {
-    AppImages
-  }
+    AppImages,
+  },
 };
 </script>
 
@@ -101,11 +138,7 @@ export default {
     .stats {
       background: greenyellow;
 
-      ul{
-        li{
-          list-style-type: none;
-        }
-      }
+      
     }
   }
 }

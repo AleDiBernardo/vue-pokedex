@@ -1,17 +1,45 @@
 <template>
-    <div class="right p-4 w-100 h-100">
-      <div class="list w-100 h-100 rounded rounded-3 bg-body">
-
-      </div>
+  <div class="right p-4 w-100 h-100">
+    <div class="list w-100 h-100 rounded rounded-3 bg-body p-4">
+      <h4>My Pokémons</h4>
+      <span class="text-dark" v-if="this.store.catchedPokemon.length > 0">
+        <ul class="p-0">
+          <li
+            v-for="curPokemon in this.store.catchedPokemon"
+            :key="curPokemon.id"
+            @click="selectPokémon(curPokemon)"
+            
+          >
+            {{ curPokemon.name.charAt(0).toUpperCase() + curPokemon.name.slice(1) }}
+          </li>
+        </ul>
+      </span>
     </div>
-  </template>
-  
-  <script>
-  export default {
-  
-  }
-  </script>
-  
-  <style lang="scss" scoped>
+  </div>
+</template>
 
-  </style>
+<script>
+import { store } from "../store";
+export default {
+  data() {
+    return {
+      store,
+    };
+  },
+  methods:{
+    selectPokémon(curPokemon){
+      this.store.results = curPokemon;
+      
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+  li{
+    cursor: pointer;
+    &:hover{
+      font-weight: bold;
+    }
+  }
+</style>

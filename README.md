@@ -31,6 +31,6 @@ Questa è un'applicazione Vue.js che simula l'esperienza di catturare Pokémon. 
    ```bash
    npm run dev
    ```
-4. **Apri il link:** 
+4. **Apri il link:**</br>
 ![alt text](image-1.png)
 

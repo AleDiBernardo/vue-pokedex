@@ -1,6 +1,8 @@
 <template>
-    <div class="right">
-  
+    <div class="right p-4 w-100 h-100">
+      <div class="list w-100 h-100 rounded rounded-3 bg-body">
+
+      </div>
     </div>
   </template>
   
@@ -11,12 +13,5 @@
   </script>
   
   <style lang="scss" scoped>
-      .right{
-          
-        //   background: yellow;
-          border-left:  10px solid rgb(156, 0, 0);
-          width: 100%;
-          height: 100%;
-  
-      }
+
   </style>

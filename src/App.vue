@@ -1,7 +1,7 @@
 <template>
   <div class="container d-flex flex-column justify-content-center align-items-center h-100 w-100">
     <img src="./assets/logo.png" id="logo" alt="">
-    <AppPokedex/>
+    <AppPokedex class="mt-4"/>
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
       height: 100%;
       position: relative;
       #logo{
-        width: 300px;
+        width: 250px;
         position: absolute;
         z-index: 1;
         top: 0;

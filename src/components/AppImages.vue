@@ -47,7 +47,7 @@ export default {
                 </button>
             </div>
             <!-- Messaggio di fallback -->
-            <p class="m-0 text-center fw-bold fs-5" v-else>Nessuna immagine disponibile</p>
+            <p class="m-0 text-center fw-bold fs-5" v-else>Image not found</p>
         </div>
     </div>
 </template>

@@ -56,7 +56,7 @@
         <span
           v-else
           class="d-flex justify-content-center align-items-center h-100 fw-bold fs-4"
-          >Search a Pokémon</span
+          >Search or select a Pokémon</span
         >
 
         <!-- {{ this.store.results ? this.store.results.name : "No results" }} -->
@@ -127,6 +127,8 @@ export default {
           );
           console.log("Catched:", catchedPokemonArray);
         } else {
+          this.message = "Already have this Pokémon";
+          // this.store.userQuery = "";
           console.log("This Pokémon is already caught!");
         }
       }

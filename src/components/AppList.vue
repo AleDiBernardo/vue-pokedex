@@ -10,7 +10,7 @@
             @click="selectPokémon(curPokemon)"
             
           >
-            {{ curPokemon.name.charAt(0).toUpperCase() + curPokemon.name.slice(1) }}
+            {{ curPokemon.name.charAt(0).toUpperCase() + curPokemon.name.slice(1)}}
           </li>
         </ul>
       </span>
@@ -26,10 +26,16 @@ export default {
       store,
     };
   },
+  mounted(){
+    if(localStorage.getItem('catchedPokemon')){
+      this.store.catchedPokemon = JSON.parse(localStorage.getItem('catchedPokemon'));
+      console.log("Dati presi: " + this.store.catchedPokemon);
+      
+    }
+  },
   methods:{
     selectPokémon(curPokemon){
       this.store.results = curPokemon;
-      
     }
   }
 };

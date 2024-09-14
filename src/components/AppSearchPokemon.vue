@@ -74,26 +74,26 @@ export default {
     return {
       store,
       err: false,
-      message: " Search a Pokémon"
+      message: " Search a Pokémon",
     };
   },
+
   methods: {
     search() {
-      
       axios
         .get(
-          `https://pokeapi.co/api/v2/pokemon/${this.store.userQuery.trim().toLowerCase()}/`
+          `https://pokeapi.co/api/v2/pokemon/${this.store.userQuery
+            .trim()
+            .toLowerCase()}/`
         )
         .then((resp) => {
           this.store.results = resp.data;
           console.log(this.store.results);
           this.err = false;
           this.message = " Search a Pokémon";
-          this.store.userQuery = ""
-
+          this.store.userQuery = "";
         })
         .catch((error) => {
-          
           this.store.results = null;
           this.store.userQuery = null;
           this.err = true;
@@ -102,15 +102,30 @@ export default {
     },
     catch() {
       if (this.store.results) {
-        const caughtPokemon = JSON.parse(JSON.stringify(this.store.results));
+        const caughtPokemon = JSON.stringify(this.store.results);
 
-        const isAlreadyCatched = this.store.catchedPokemon.some(
-          (pokemon) => pokemon.name === caughtPokemon.name
+        // Controlla se localStorage è vuoto o se contiene già un array di Pokémon
+        let catchedPokemonArray =
+          JSON.parse(localStorage.getItem("catchedPokemon")) || [];
+
+        // Controlla se il Pokémon è già presente nell'array
+        const isAlreadyCatched = catchedPokemonArray.some(
+          (pokemon) => JSON.stringify(pokemon) === caughtPokemon
         );
 
         if (!isAlreadyCatched) {
-          this.store.catchedPokemon.push(caughtPokemon);
-          console.log("Catched:", this.store.catchedPokemon);
+          // Aggiungi il Pokémon all'array
+          catchedPokemonArray.push(JSON.parse(caughtPokemon));
+          // console.log(catchedPokemonArray);
+          
+          this.store.catchedPokemon = catchedPokemonArray;
+
+          // Salva l'array aggiornato nel localStorage
+          localStorage.setItem(
+            "catchedPokemon",
+            JSON.stringify(catchedPokemonArray)
+          );
+          console.log("Catched:", catchedPokemonArray);
         } else {
           console.log("This Pokémon is already caught!");
         }
@@ -137,8 +152,6 @@ export default {
 
     .stats {
       background: greenyellow;
-
-      
     }
   }
 }

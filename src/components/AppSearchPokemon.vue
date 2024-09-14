@@ -20,9 +20,9 @@
         class="d-flex justify-content-center align-items-center mt-3 p-3 text-bg-secondary rounded rounded-3"
       >
         <div
-          class="display bg-light border border-5 border-black rounded rounded-3"
+          class="display bg-info border border-5 border-black rounded rounded-3  "
         >
-          <img src="" alt="" />
+          <AppImages/>
         </div>
       </div>
       <div class="stats w-100 h-100 rounded rounded-3 p-4">
@@ -45,13 +45,13 @@
 
             <span class="fw-bold">Stats</span>
             <ul class="p-0">
-              <li v-for="curStat in this.store.results.stats ">
+              <li v-for="curStat in this.store.results.stats" :key="curStat.id">
                   {{ curStat.stat.name + ": " + curStat.base_stat }}
               </li>
             </ul>
           </div>
         </div>
-        <span v-else>Search a Pokémon</span>
+        <span v-else class="d-flex justify-content-center align-items-center h-100 fw-bold fs-4">Search a Pokémon</span>
 
         <!-- {{ this.store.results ? this.store.results.name : "No results" }} -->
       </div>
@@ -62,6 +62,7 @@
 <script>
 import axios from "axios";
 import { store } from "../store";
+import AppImages from "./AppImages.vue";
 export default {
   data() {
     return {
@@ -70,6 +71,7 @@ export default {
   },
   methods: {
     search() {
+     
       axios
         .get(`https://pokeapi.co/api/v2/pokemon/${this.store.userQuery}/`)
         .then((resp) => {
@@ -78,6 +80,9 @@ export default {
         });
     },
   },
+  components: {
+    AppImages
+  }
 };
 </script>
 
